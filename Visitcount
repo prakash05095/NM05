@@ -1,0 +1,14 @@
+const express = require('express');
+const session = require('express-session');
+const app = express();
+app.use(session({
+ secret: '7332',
+ resave: false,
+ saveUninitialized: true,
+ cookie: { secure: false }
+}));
+app.get('/', (req, res) => {
+ req.session.visitCount = (req.session.visitCount || 0) + 1;
+ res.send(`Visits: ${req.session.visitCount}`);
+});
+app.listen(3005, () => console.log("Running on http://localhost:3005"));
